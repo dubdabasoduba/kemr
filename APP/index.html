@@ -31,22 +31,6 @@
 
                     var anchor = $("<a></a>").attr("href", "#").append(data.name);
 
-                    $(anchor).bind('click',{
-                        link:data.href,
-                        id:data.id,
-                        name:data.name,
-                        created:data.created,
-                        updated:data.lastUpdated
-                    },function(event){
-                        $("#more").html("");
-                        $("#more").append("Link:<a href="+event.data.link+">More Details</a>").append("<br/>");
-                        $("#more").append("ID:"+event.data.id).append("<br/>");
-                        $("#more").append("Name:"<a href=+event.data.name).append("<br/>");
-                        $("#more").append("Created:"+event.data.created).append("<br/>");
-                        $("#more").append("UPdated:"+event.data.updated).append("<br/>");
-                        $("#more").append("<hr/>").append("<br/>");
-
-                    });
 
                     $("#results").append(anchor).append("<br/>");
                 });
