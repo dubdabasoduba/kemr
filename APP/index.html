@@ -1,0 +1,63 @@
+<style type="text/css" media="screen">
+
+        /*body {
+
+        text-align: center;
+
+        min-width: 760px;
+
+        }*/
+
+    #more {
+
+        width: 720px;
+
+        margin: 0 auto;
+
+        text-align: left;
+
+    }
+
+</style>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function(){
+        $("#search").keyup(function(){
+            $("#results").html("");
+            $.get('../api/indicatorGroups/query/'+$(this).val()+'.json', function(json){
+                $(json.indicatorGroups).each(function(i, data){
+
+                    var anchor = $("<a></a>").attr("href", "#").append(data.name);
+
+                    $(anchor).bind('click',{
+                        link:data.href,
+                        id:data.id,
+                        name:data.name,
+                        created:data.created,
+                        updated:data.lastUpdated
+                    },function(event){
+                        $("#more").html("");
+                        $("#more").append("Link:<a href="+event.data.link+">More Details</a>").append("<br/>");
+                        $("#more").append("ID:"+event.data.id).append("<br/>");
+                        $("#more").append("Name:"<a href=+event.data.name).append("<br/>");
+                        $("#more").append("Created:"+event.data.created).append("<br/>");
+                        $("#more").append("UPdated:"+event.data.updated).append("<br/>");
+                        $("#more").append("<hr/>").append("<br/>");
+
+                    });
+
+                    $("#results").append(anchor).append("<br/>");
+                });
+            });
+        });
+    });
+</script>
+
+<div>
+    <label for="search">Search Criteria</label>
+    <input type="text" id="search" class="search" />
+    <div id="results"></div>
+    <div id="more"></div>
+</div>
