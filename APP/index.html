@@ -19,11 +19,11 @@
     var data;
     var k=0;
     var indic=0;
-    var chartArray = [];
-    var IndArray = [];
-    var  MapArray =[];
-
-    $(document).ready(function(){
+    chartArray = [];
+    IndArray = [];
+    MapArray =[];
+    notused =[];
+    deferred =    $(document).ready(function(){
         $("#results").append("<h1>USED </h1>");
         $("#child").append("<h1>NOT USED</h1>");
         $("#maps").append("<h1>MAPS</h1>");
@@ -47,7 +47,21 @@
         });
 
 
+    });
+    deferred.ajaxStop(function () {
+        /*  alert("map"+MapArray.valueOf());
+         alert("ind"+IndArray.valueOf());
+         alert("notused"+notused.valueOf());	*/
+        parcentnot=((notused.length/IndArray.length)*100);
+        parcentused=((MapArray.length/IndArray.length)*100);
+        $.each(notused,function( intIndex, objValue ){
+            var anchor = $("<p class='blue' ></p>").append(objValue);
 
+            $("#child").append(anchor);
+
+        });
+        $("#child").append("Pacentage not used=>"+parcentnot);
+        $("#results").append("Pacentage Used=>"+parcentused);
     });
     function Maps()
     {
@@ -58,7 +72,7 @@
             $(json.mapViews).each(function(i, data){
                 var chartid=data.id;
                 var charthref=data.href;
-
+                var parcent=0;
                 $.get("../api/mapViews/"+data.id+".json", function(map) {
 
                     $(map.indicator).each(function(i, d){
@@ -70,6 +84,7 @@
                             var anchor = $("<p class='blue' ></p>").append(d.name);
 
                             $("#results").append(anchor);
+                            notused = $(IndArray).not(MapArray).get();
 
                         }
 
@@ -77,17 +92,12 @@
 
 
 
-
                     });
 
-                    /*	var notused = $(IndArray).not(MapArray).get();
-                     $.each($(IndArray).not(MapArray).get(),function( intIndex, objValue ){
-                     var anchor = $("<p class='blue' ></p>").append(objValue);
-
-                     $("#child").append(anchor);
-                     });*/
 
                 });
+
+
 
             });
 
